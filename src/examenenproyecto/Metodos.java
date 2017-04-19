@@ -30,7 +30,7 @@ public class Metodos {
                break;}
           }    
           }while (opcion!=4);
-          JOptionPane.showMessageDialog(null,"Hata luego");
+          JOptionPane.showMessageDialog(null,"Hasta luego");
       }
       
  public void Registrar(){
