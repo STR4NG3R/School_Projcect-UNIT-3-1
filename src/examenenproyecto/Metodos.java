@@ -12,13 +12,10 @@ public class Metodos {
           opcion=Integer.parseInt(JOptionPane.showInputDialog(null,"----------Eventos Solis-----------\n1.-Regitrar Servicio.\n2.-Ver servicios\n3.-Eliminar servicios\n4.-Salir"));
           switch(opcion){
               case 1:
-               Datos a=new Datos();
-               Registrar();
-               a1[conta]=a;
+               a1[conta]=Registrar();
                conta++;
                break;
                case 2:{
-                   System.out.println(a1[0].generarId());
                    verRegistrado();
                break;}
                case 3:{
@@ -33,7 +30,7 @@ public class Metodos {
           JOptionPane.showMessageDialog(null,"Hasta luego");
       }
       
- public void Registrar(){
+ public Datos Registrar(){
      Datos a=new Datos();
         double precioSalon[]=new double[]{4000,10000,30000};
         String salones[]=new String[] {"Economico","Estandar","Deluxe"};
@@ -44,7 +41,7 @@ public class Metodos {
         fechaEntra();
      int personasAsistiran;
      String sn;
-     personasAsistiran=Integer.parseInt( JOptionPane.showInputDialog(null, "Ingrese el numero de personas que se tienen programadas para el evento"));
+     a.setNopersonas(personasAsistiran=Integer.parseInt( JOptionPane.showInputDialog(null, "Ingrese el numero de personas que se tienen programadas para el evento")));
      String son[]=new String[]{ "Si", "No"};
         sn=(String) JOptionPane.showInputDialog(null, "Platillos", "¿Habra comida en su evento?", JOptionPane.QUESTION_MESSAGE, null,son, "");
      if(sn.equals("Si")){
@@ -83,15 +80,15 @@ public class Metodos {
         System.out.println(año());
         a.setAño(año());
         a.generarId();
-        System.out.println(a.generarId());
-  }
+return a; 
+ }
 void verRegistrado(){
 for (int i=0;i<conta;i++){
+    System.out.println( a1[i].getNopersonas());  
     mensa=a1[i].generarId()+"\n";
 }
 JOptionPane.showMessageDialog(null, mensa);
 } 
- 
  String fechaEntra(){
      Fecha syste=new Fecha();
      syste.asignarFecha();
