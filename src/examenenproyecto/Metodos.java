@@ -7,16 +7,10 @@ public class Metodos {
     Datos a1[]=new Datos[1000];
     Fecha syste=new Fecha();
       public void seleccion(){
-          String opcion;
-          int valida;
+          int opcion;
            do{ 
-               do{
-          opcion=JOptionPane.showInputDialog(null,"----------Eventos Solis-----------\n1.-Registrar Servicio.\n2.-Ver servicios\n3.-Eliminar servicios\n4.-Salir");
-          if(!"".equals(opcion));{
-          valida=Integer.parseInt(opcion);
-               }
-               }while("".equals(opcion)||!(valida>0&&valida<5));
-          switch(valida){
+          opcion=Integer.parseInt(JOptionPane.showInputDialog(null,"----------Eventos Solis-----------\n1.-Registrar Servicio.\n2.-Ver servicios\n3.-Eliminar servicios\n4.-Salir"));
+          switch(opcion){
               case 1:
                a1[conta]=Registrar();
                conta++;
@@ -31,7 +25,7 @@ public class Metodos {
                  consultar();  
                break;}
           }    
-          }while (valida==4);
+          }while (opcion!=4);
           JOptionPane.showMessageDialog(null,"Hasta luego");
       }
  public Datos Registrar(){
@@ -80,11 +74,18 @@ public class Metodos {
         }
         do{
         int dia,mes,año;
-        a.setAño(año=Integer.parseInt(JOptionPane.showInputDialog("Introducir el año que se realizara el evnto")));
+        a.setAño(año=Integer.parseInt(JOptionPane.showInputDialog("Introducir el año que se realizara el evento")));
+        String meses[] = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciemrbre"};
+        ArrayList<String> mesIndex = new ArrayList<>(Arrays.asList(meses));
+        Object me = JOptionPane.showInputDialog(null, "Elija el mes del convivio","Elija el mes",JOptionPane.QUESTION_MESSAGE, null,meses,"Enero");
+        String meso = me.toString();
+        int mesN = mesIndex.indexOf(meso)+1;
+        a.setMes(mesN);
         a.setDia(dia=Integer.parseInt(JOptionPane.showInputDialog("Introducir el dia que se realizara el evento")));
-        a.setMes(mes=Integer.parseInt(JOptionPane.showInputDialog("Introducir el mes en el que se hara el evento")));
         a.fechaCorrecta();
-            System.out.println(a.fecha2());
+            if(!(a.fechaCorrecta())){
+                JOptionPane.showMessageDialog(null,"Lo que esta haciendo es incorrecto, por favor establezca una fecha valida.\n*Tome en cuenta si el año de la fecha es bisiesto.\n*Tome en cuenta que no puede seleccionar una fecha del pasado.");
+            }
         }while((a.fechaCorrecta())==false);
         a.setAño(año());
         a.generarId();
@@ -97,14 +98,12 @@ void verRegistrado(){
             "-----------------------------------------------------------------------------------------------------------",
             "|ID","|FECHA DE REGISTRO","|PRECIO","|DIA DEL CONVIVIO|",
             "-----------------------------------------------------------------------------------------------------------"); 
-    int c=cabecera.length();
-    System.out.println(c);
 for (int i=0;i<conta;i++){  
     if (!(a1[i]==null)){
     mensa=mensa+String.format(" %s%30s%22s%19s%n",a1[i].getID(),a1[i].getFechaEntra(),a1[i].getTotal(),a1[i].fecha2());
     }
 }
-JOptionPane.showMessageDialog(null,cabecera+mensa);
+JOptionPane.showMessageDialog(null,cabecera+mensa+"-----------------------------------------------------------------------------------------------------------");
 } 
 
  int año(){
@@ -127,5 +126,8 @@ JOptionPane.showMessageDialog(null,cabecera+mensa);
         JOptionPane.showMessageDialog(null,"No hay ningun ID así. intentelo de nuevo.");    
         break;}
         }    
+          for (int i=0;i<conta;i++){
+            
+        }
 }
 }

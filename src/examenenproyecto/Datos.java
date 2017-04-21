@@ -92,8 +92,7 @@ public Datos(int nopersonas, double preciosalon, double preciocomida, double pre
  }
   void fechaSalida(){
  }
-  String fecha2(){
-      
+  String fecha2(){   
       fecha2=getDia()+"/"+getMes()+"/"+getAño();    
       return fecha2;
   }
@@ -120,23 +119,38 @@ public Datos(int nopersonas, double preciosalon, double preciocomida, double pre
     }
          public boolean fechaCorrecta(){
     boolean diaCorrecto,mesCorrecto,añoCorrecto;
-    añoCorrecto=(año>0);
+    añoCorrecto=(año>0)&&(año>=syste.getAño());
+    if(año==syste.getAño()){
+    mesCorrecto=(mes>=syste.getMes());
+    }
     mesCorrecto=((mes>0)&&(mes<13));
     switch(mes)
     {
         case 2:{
             if(esBisiesto()){
+            if(mes>=syste.getMes()){
+            diaCorrecto=(dia>=syste.getDia());    
+            }
             diaCorrecto=(dia>=1&&dia<=29);}
-            else{
+            else{  
+            if(mes>=syste.getMes()){
+            diaCorrecto=(dia>=syste.getDia());    
+            }
             diaCorrecto=(dia>=1&&dia<=28);
             }break;}
         case 4:
         case 6:
         case 9:
         case 11:
+                        if(mes>=syste.getMes()){
+            diaCorrecto=(dia>=syste.getDia());    
+                        }
             diaCorrecto=(dia>=1&&dia<=30);
             break;
         default:{
+                        if(mes>=syste.getMes()){
+            diaCorrecto=(dia>=syste.getDia());    
+            }
             diaCorrecto=(dia>=1&&dia<=31);
             break;}
             }
