@@ -1,9 +1,11 @@
 package examenenproyecto;
+import java.util.Random;
 public class Datos {
-private String id="";
-private int nopersonas;
-private double preciosalon,preciocomida,preciomusica,preciobebida,preciopostre;
-private int diaC,mesC,añoC,diaE,mesE,año;
+    Fecha syste=new Fecha();
+private String id="",fecha="",fecha2="";
+private int nopersonas=1;
+private double preciosalon,preciocomida=1,preciomusica,preciobebida=1,preciopostre=1,total;
+private int dia,mes,año;
 Datos(){   
 }
 public Datos(int nopersonas, double preciosalon, double preciocomida, double preciomusica, int diaC, int mesC,int añoC, int diaE, int mesE, int año) {
@@ -11,16 +13,17 @@ public Datos(int nopersonas, double preciosalon, double preciocomida, double pre
         this.preciosalon = preciosalon;
         this.preciocomida = preciocomida;
         this.preciomusica = preciomusica;
-        this.diaC = diaC;
-        this.mesC = mesC;
-        this.añoC = añoC;
-        this.diaE = diaE;
-        this.mesE = mesE;
-        this.año = año;
+        this.dia = diaC;
+        this.mes = mesC;
+        this.año = añoC;
+        this.dia = diaE;
+        this.mes = mesE;
     }
-
+    void gTotal(){
+        total=this.nopersonas*this.preciocomida*this.getPreciobebida()*preciopostre+(this.preciosalon+this.preciomusica);
+    }
     public double getTotal(){
-        return ((this.nopersonas*this.preciocomida*this.preciobebida*preciopostre+(this.preciosalon+this.preciomusica)));
+        return total;
     }
     public int getNopersonas() {
         return nopersonas;
@@ -54,67 +57,100 @@ public Datos(int nopersonas, double preciosalon, double preciocomida, double pre
         this.preciomusica = preciomusica;
     }
 
-    public int getDiaC() {
-        return diaC;
-    }
-
-    public void setDiaC(int diaC) {
-        this.diaC = diaC;
-    }
-
-    public int getMesC() {
-        return mesC;
-    }
-    public void setPrecioBebida(double bebida){
-        this.preciobebida=bebida;
-    }
-    public void setMesC(int mesC) {
-        this.mesC = mesC;
-    }
-
-    public int getAñoC() {
-        return añoC;
-    }
-
-    public void setAñoC(int añoC) {
-        this.añoC = añoC;
-    }
-
-    public int getDiaE() {
-        return diaE;
-    }
-
-    public void setDiaE(int diaE) {
-        this.diaE = diaE;
-    }
-
-    public int getMesE() {
-        return mesE;
-    }
-
    
-    public void setMesE(int mesE) {
-        this.mesE = mesE;
+    public void generarId(){
+    String años=Integer.toString(this.getAño());
+    int x=años.length();
+    char a;
+        for (int i=x/2;i<x;i++){
+        a = años.charAt(i);
+         id=id+a;
+        }
+        for (int i=0;i<3;i++){
+        Random rand=new Random();
+        int nrdm=rand.nextInt(9);
+        id=id+nrdm;
+        }
+            for  (int i=0;i<3;i++){
+    Random rdm = new Random();
+    int caso = rdm.nextInt(9);
+    switch(caso){
+        case 1:id=id+"a"; break;
+        case 2:id=id+"q"; break;
+        case 3:id=id+"R"; break;
+        case 4:id=id+"Z"; break;
+        default:id=id+"P";break;
     }
-
+    }
+    }
+    public String getID(){
+     return id;   
+    }
+ void fechaEntra(){
+     syste.asignarFecha();
+     fecha=syste.getDia()+"/"+syste.getMes()+"/"+syste.getAño()+"."+syste.getHora()+"."+syste.getMinute()+"."+syste.getSeg();       
+ }
+  void fechaSalida(){
+ }
+  String fecha2(){
+      
+      fecha2=getDia()+"/"+getMes()+"/"+getAño();    
+      return fecha2;
+  }
+ String getFechaEntra(){
+   return fecha;  
+ }
+    public int getDia() {
+        return dia;
+    }
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+    public int getMes() {
+        return mes;
+    }
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
     public int getAño() {
         return año;
     }
-
-
     public void setAño(int año) {
         this.año = año;
     }
-    public String generarId(){
-    String años=Integer.toString(this.año);
-        for (int i=4; i<=2;i--){
-           char a;
-           años=Integer.toString(this.año);
-           a = años.charAt(i);
-           id=id+a;
-        }
-        id=id+"hola";
-        return id;
+         public boolean fechaCorrecta(){
+    boolean diaCorrecto,mesCorrecto,añoCorrecto;
+    añoCorrecto=(año>0);
+    mesCorrecto=((mes>0)&&(mes<13));
+    switch(mes)
+    {
+        case 2:{
+            if(esBisiesto()){
+            diaCorrecto=(dia>=1&&dia<=29);}
+            else{
+            diaCorrecto=(dia>=1&&dia<=28);
+            }break;}
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            diaCorrecto=(dia>=1&&dia<=30);
+            break;
+        default:{
+            diaCorrecto=(dia>=1&&dia<=31);
+            break;}
+            }
+    return diaCorrecto && mesCorrecto && añoCorrecto;    
+}    
+    public double getPreciobebida() {
+        return preciobebida;
     }
 
+    public void setPreciobebida(double preciobebida) {
+        this.preciobebida = preciobebida;
+    }
+          private boolean esBisiesto()
+    {
+        return ((año %4==0)&&(año%100!=0)||(año %400==0));
+    }
 }
